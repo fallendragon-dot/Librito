@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Diario de Amor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: linear-gradient(135deg, #ffe9f0 0%, #f2f9ff 100%);
+      font-family: 'Segoe UI', cursive;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+    }
+    .diario {
+      width:90%; max-width:900px; height:80vh;
+      position:relative;
+      display:flex;
+      perspective:1500px;
+    }
+    .pagina {
+      width:50%; height:100%; background:#fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border:2px solid #fce4ec;
+      border-radius:10px;
+      padding:30px;
+      position:absolute;
+      top:0;
+      overflow-y:auto;
+      transform-style:preserve-3d;
+      backface-visibility:hidden;
+    }
+    .izq { left:0; transform-origin:right; }
+    .der { right:0; transform-origin:left; }
+    .titulo {
+      font-size:1.8rem;
+      color:#ad1457;
+      margin-bottom:10px;
+      border-bottom:1px dashed #f8bbd0;
+      padding-bottom:8px;
+    }
+    .texto {
+      font-size:1.2rem;
+      color:#4a0e2a;
+      line-height:1.6;
+      margin-top:12px;
+    }
+    .decoracion {
+      position:absolute;
+      width:80px;
+      height:80px;
+      background:url('https://i.imgur.com/lrZhWtP.png') no-repeat center/contain;
+      top:10px; left:calc(50% - 40px);
+      opacity:0.2;
+    }
+    .botones {
+      position:absolute;
+      bottom:20px;
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+    }
+    button {
+      background:#f8bbd0;
+      border:none;
+      padding:10px 20px;
+      border-radius:8px;
+      font-size:1rem;
+      color:#fff;
+      cursor:pointer;
+      transition:background .3s;
+    }
+    button:hover { background:#ec407a; }
+  </style>
+</head>
+<body>
+
+<div class="diario">
+  <div class="pagina izq" id="pagIzq">
+    <div class="decoracion"></div>
+    <div class="titulo" id="tiIzq"></div>
+    <div class="texto" id="txIzq"></div>
+  </div>
+  <div class="pagina der" id="pagDer">
+    <div class="decoracion"></div>
+    <div class="titulo" id="tiDer"></div>
+    <div class="texto" id="txDer"></div>
+  </div>
+  <div class="botones">
+    <button onclick="prev()">⟵ Atrás</button>
+    <button onclick="next()">Siguiente ⟶</button>
+  </div>
+</div>
+
+<script>
+  const contenido = REPLACE_THIS_WITH_CONTENT;
+
+  let idx = 0;
+  function mostrar(){
+    const [l,r] = contenido[idx];
+    document.getElementById('tiIzq').innerText = l.t;
+    document.getElementById('txIzq').innerText = l.x;
+    document.getElementById('tiDer').innerText = r.t;
+    document.getElementById('txDer').innerText = r.x;
+  }
+  function next(){
+    if(idx < contenido.length -1){
+      document.getElementById('pagDer').style.transform="rotateY(-170deg)";
+      setTimeout(()=>{
+        idx++;
+        mostrar();
+        document.getElementById('pagDer').style.transform="rotateY(0deg)";
+      },300);
+    }
+  }
+  function prev(){
+    if(idx > 0){
+      document.getElementById('pagIzq').style.transform="rotateY(170deg)";
+      setTimeout(()=>{
+        idx--;
+        mostrar();
+        document.getElementById('pagIzq').style.transform="rotateY(0deg)";
+      },300);
+    }
+  }
+  mostrar();
+</script>
+
+</body>
+</html>
